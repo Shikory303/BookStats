@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Stats - Главная</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/logo.png" alt="Book Stats" width="80" height="auto" class="d-inline-block align-text-top me-2">
+                <span style="font-size: 1.5rem;">Book Stats</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="statistics.html">Статистика</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="booklist.html">Список книг</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="auth-link" href="auth.html">Войти / Зарегистрироваться</a>
+                    </li>
+                    <li class="nav-item d-none" id="logout-link">
+                        <a class="nav-link" href="#">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="hero-overlay">
+            <h1 class="text-white display-4 maintext m-2" id="welcome-message">Добро пожаловать в Book Stats</h1>
+            <p class="lead maintext m-2">Собирайте статистику о прочитанных книгах, отслеживайте свой прогресс и делитесь результатами с друзьями!</p>
+        </div>
+    </div>
+
+    <div class="container mt-5" id="add-book-form">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Добавьте прочтенную книгу</h2>
+                <form id="bookForm">
+                    <div class="mb-3">
+                        <label for="bookTitle" class="form-label">Название книги</label>
+                        <input type="text" class="form-control" id="bookTitle" placeholder="Введите название книги">
+                    </div>
+                    <div class="mb-3">
+                        <label for="author" class="form-label">Автор</label>
+                        <input type="text" class="form-control" id="author" placeholder="Введите имя автора">
+                    </div>
+                    <div class="mb-3">
+                        <label for="pages" class="form-label">Количество страниц</label>
+                        <input type="number" class="form-control" id="pages" placeholder="Введите количество страниц">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Добавить книгу</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-3 d-none" id="auth-message">
+        <h4 class="text-center">Чтобы добавить прочтенную книгу, нужно авторизоваться на сайте</h4>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Stats - Статистика</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="images/logo.png" alt="Book Stats" width="80" height="auto" class="d-inline-block align-text-top me-2">
+                <span style="font-size: 1.5rem;">Book Stats</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="statistics.html">Статистика</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="booklist.html">Список книг</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">О нас</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="auth-link" href="auth.html">Войти / Зарегистрироваться</a>
+                    </li>
+                    <li class="nav-item d-none" id="logout-link">
+                        <a class="nav-link" href="#">Выйти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5" id="content">
+        <h1 class="text-center">Статистика по прочитанным книгам</h1>
+        <div class="alert alert-danger d-none" id="auth-alert">
+            Для доступа к этой странице вам необходимо <a href="auth.html">войти в систему</a>.
+        </div>
+        <div class="row mt-4 d-none" id="stats">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Всего прочитано книг</h5>
+                        <p class="card-text" id="total-books">0 книг</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Среднее количество страниц</h5>
+                        <p class="card-text" id="average-pages">0 страниц</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Любимый автор</h5>
+                        <p class="card-text" id="favorite-author">Не определен</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const isLoggedIn = localStorage.getItem("isLoggedIn");
+            const currentUserEmail = localStorage.getItem("currentUserEmail");
+            const authAlert = document.getElementById("auth-alert");
+            const stats = document.getElementById("stats");
+
+            if (isLoggedIn === "true" && currentUserEmail) {
+                authAlert.classList.add("d-none");
+                stats.classList.remove("d-none");
+
+                // Получаем книги пользователя
+                const books = JSON.parse(localStorage.getItem("books")) || {};
+                const userBooks = books[currentUserEmail] || [];
+
+                // Рассчитываем статистику
+                const totalBooks = userBooks.length;
+                let totalPages = 0;
+                const authorCount = {};
+
+                userBooks.forEach(book => {
+                    totalPages += parseInt(book.pages);
+                    authorCount[book.author] = (authorCount[book.author] || 0) + 1;
+                });
+
+                const averagePages = totalBooks > 0 ? Math.round(totalPages / totalBooks) : 0;
+
+                // Определяем любимого автора
+                let favoriteAuthor = "Не определен";
+                let maxCount = 0;
+                for (const author in authorCount) {
+                    if (authorCount[author] > maxCount) {
+                        maxCount = authorCount[author];
+                        favoriteAuthor = author;
+                    }
+                }
+
+                // Обновляем статистику в HTML
+                document.getElementById("total-books").textContent = `${totalBooks} книг`;
+                document.getElementById("average-pages").textContent = `${averagePages} страниц`;
+                document.getElementById("favorite-author").textContent = favoriteAuthor;
+            } else {
+                authAlert.classList.remove("d-none");
+                stats.classList.add("d-none");
+            }
+        });
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
